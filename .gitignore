@@ -1,24 +1,63 @@
-# build output
-dist/
-
-# generated types
-.astro/
-
-# dependencies
+# =========================
+# 1. Dependencias & Caché
+# =========================
 node_modules/
+.pnp/
+.pnp.js
+.npm/
+.eslintcache
+*.tsbuildinfo
 
-# logs
+# =========================
+# 2. Build & Salida (Astro / Vite)
+# =========================
+dist/
+.astro/
+.vercel/
+.netlify/
+
+# =========================
+# 3. Entorno y Secretos (¡Crítico!)
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# 4. Logs de depuración
+# =========================
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+# =========================
+# 5. Archivos de Sistema Operativo
+# =========================
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+# Linux (Fedora/Ubuntu)
+*~
+.Trash-*
 
-# jetbrains setting folder
+# =========================
+# 6. Editores / IDEs
+# =========================
 .idea/
+.project
+*.sublime-workspace
+
+# Nota sobre VS Code: 
+# NO ignoramos la carpeta .vscode/ completa porque queremos 
+# compartir el settings.json de Prettier/ESLint con el equipo.
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

@@ -1,0 +1,92 @@
+---
+// src/components/astro/Navbar.astro
+
+// Asumiendo que instalaste lucide-react y vas a usar Astro para renderizarlos.
+// Nota: En Astro, si usas íconos de React sin interactividad, no necesitas `client:load`.
+import { ShoppingCart } from 'lucide-react';
+// 1. Importamos el componente nativo de imágenes de Astro
+import { Image } from 'astro:assets';
+// Tomamos la URL base de nuestro .env para construir la ruta dinámicamente.
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+const logoUrl = `${r2Url}/logo-cemag.avif`; // Asegúrate de que coincida con el nombre en tu R2
+---
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-slate-200 bg-slate-50/80 backdrop-blur-md"
+>
+  {/* El nav es el contenedor principal */}
+  <nav
+    class="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8"
+    aria-label="Navegación principal"
+  >
+    {/* Columna 1: LOGO (Izquierda) */}
+    <div class="flex flex-1 justify-start">
+      <a
+        href="/"
+        class="flex items-center gap-2 transition-opacity hover:opacity-80"
+        aria-label="Volver al inicio"
+      >
+        {
+          /* 
+          Best Practice: Astro procesará esto, lo convertirá a un formato ultra ligero 
+          y le pondrá los atributos width y height correctos automáticamente.
+          
+          Clases de Tailwind:
+          - h-8 o h-10: Restringe la altura máxima para que encaje en el Navbar.
+          - w-auto: Mantiene la proporción original de la imagen.
+          - object-contain: Asegura que el logo no se recorte.
+        */
+        }
+
+        <Image
+          src={logoUrl}
+          alt="Logotipo de Cemag"
+          inferSize={true}
+          class="h-10 rounded-full w-auto object-contain"
+          loading="eager"
+        />
+      </a>
+    </div>
+
+    {
+      /* 
+      Columna 2: NOMBRE (Centro)
+      Al estar rodeado de dos contenedores flex-1, este bloque se mantendrá 
+      perfectamente centrado matemáticamente.
+    */
+    }
+    <div class="flex shrink-0 justify-center">
+      <a href="/" class="font-bold text-2xl tracking-tight text-[#eab4ae]">
+        <h1>CEMAG</h1>
+      </a>
+    </div>
+
+    {
+      /* 
+      Columna 3: CARRITO (Derecha)
+      flex-1 y justify-end empujan el contenido pegado al borde derecho.
+    */
+    }
+    <div class="flex flex-1 justify-end">
+      <button
+        class="relative p-2 text-slate-900 transition-colors hover:text-slate-600"
+        aria-label="Abrir carrito"
+      >
+        <ShoppingCart className="h-6 w-6" />
+
+        {
+          /* 
+          Best Practice: Indicador visual (Badge) para el carrito.
+          Añadido para cuando implementes la lógica de React. 
+          Si está vacío, puedes ocultar este span.
+        */
+        }
+        <span
+          class="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white"
+        >
+          2
+        </span>
+      </button>
+    </div>
+  </nav>
+</header>

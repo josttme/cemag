@@ -1,11 +1,55 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro
+import Layout from '@/layouts/Layout.astro';
+import ProductCard from '@/components/astro/ProductCard.astro';
+import HeroCarousel from '@/components/react/HeroCarousel';
+import { products } from '@/lib/data';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 2. Armamos la estructura de datos respetando la nueva interfaz
+// 1. Tomamos la ruta base de tu nube (la misma que usamos para el logo)
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+
+// 2. Armamos la estructura de datos concatenando la URL.
+// ¡Mira lo limpio que queda sin las importaciones locales!
+const heroSlides = [
+  {
+    id: 'slide-1',
+    mobileImageUrl: `${r2Url}/pantufla-claro-mobile.avif`,
+    desktopImageUrl: `${r2Url}/pantufla-claro-desktop.avif`,
+    altText: 'Nueva colección de temporada',
+  },
+  {
+    id: 'slide-2',
+    mobileImageUrl: `${r2Url}/pantufla-marron-mobile.avif`,
+    // 🚨 Tech Lead warning: Corregí un error tipográfico aquí.
+    // En tu código original decía "dektop" sin la 's'.
+    // Asegúrate de que en Cloudflare el archivo se llame exactamente así.
+    desktopImageUrl: `${r2Url}/pantufla-marron-dektop.avif`,
+    altText: 'Pantuflas marrones exclusivas',
+  },
+  {
+    id: 'slide-3',
+    mobileImageUrl: `${r2Url}/pantufla-rosa-mobile.avif`,
+    desktopImageUrl: `${r2Url}/pantufla-rosa-desktop.avif`,
+    altText: 'Pantuflas rosas de confort',
+  },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="CEMAG"
+  description="Catálogo de remeras y pantalones con moldería de alta calidad."
+>
+  <section>
+    <HeroCarousel slides={heroSlides} client:load />
+  </section>
+
+  <section class="py-10">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6 px-1">Pantuflas</h2>
+    <div
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-10"
+    >
+      {products.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
 </Layout>

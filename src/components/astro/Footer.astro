@@ -1,0 +1,123 @@
+---
+// src/components/astro/Footer.astro
+import { Image } from 'astro:assets';
+// Ruta relativa a prueba de balas que configuramos en el paso anterior
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+const logoUrl = `${r2Url}/logo-cemag.avif`;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      {/* Columna 1: Marca y Logo */}
+      <div class="flex flex-col items-start gap-4">
+        <a
+          href="/"
+          class="flex items-center gap-2"
+          aria-label="Volver al inicio"
+        >
+          <Image
+            src={logoUrl}
+            alt="Logotipo de Cemag"
+            inferSize={true}
+            class="h-10 rounded-full w-auto object-contain"
+            loading="eager"
+          />
+          <span class="text-2xl font-bold tracking-tight text-[#eab4ae]">
+            Cemag
+          </span>
+        </a>
+      </div>
+
+      {/* Columna 2: Contacto y Dirección */}
+      <div class="flex flex-col gap-4">
+        <h3
+          class="text-sm font-semibold text-slate-900 uppercase tracking-wider"
+        >
+          Contacto
+        </h3>
+        <address class="not-italic flex flex-col gap-2 text-sm text-slate-500">
+          <p>Av. Caseros 3000, Parque Patricios</p>
+          <p>Buenos Aires, Argentina</p>
+          <a
+            href="mailto:hola@cemag.com"
+            class="hover:text-slate-900 transition-colors"
+          >
+            hola@cemag.com
+          </a>
+        </address>
+      </div>
+
+      {/* Columna 3: Redes Sociales (SVGs Nativos - Zero Dependency) */}
+      <div class="flex flex-col gap-4">
+        <h3
+          class="text-sm font-semibold text-slate-900 uppercase tracking-wider"
+        >
+          Síguenos
+        </h3>
+        <div class="flex gap-4 fill-slate-400">
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="Instagram"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M128 80a48 48 0 1 0 48 48 48 48 0 0 0-48-48m0 80a32 32 0 1 1 32-32 32 32 0 0 1-32 32m48-136H80a56 56 0 0 0-56 56v96a56 56 0 0 0 56 56h96a56 56 0 0 0 56-56V80a56 56 0 0 0-56-56m40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12 12 12 0 0 1 12 12"
+              ></path></svg
+            >
+          </a>
+
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="Facebook"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M128 24a104 104 0 1 0 104 104A104 104 0 0 0 128 24m8 192v-64h24a8 8 0 0 0 0-16h-24v-24a16 16 0 0 1 16-16h16a8 8 0 0 0 0-16h-16a32 32 0 0 0-32 32v24H96a8 8 0 0 0 0 16h24v64a88 88 0 1 1 16 0"
+              ></path></svg
+            >
+          </a>
+
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="TikTok"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M224 72a48 48 0 0 1-48-48 8 8 0 0 0-8-8h-40a8 8 0 0 0-8 8v132a20 20 0 1 1-29-18 8 8 0 0 0 5-7V88a8 8 0 0 0-9-8c-36 6-63 39-63 76a76 76 0 0 0 152 0v-40a103 103 0 0 0 48 12 8 8 0 0 0 8-8V80a8 8 0 0 0-8-8m-8 40a87 87 0 0 1-43-17 8 8 0 0 0-13 7v54a60 60 0 0 1-120 0c0-26 17-49 40-58v28a36 36 0 1 0 56 30V32h25a64 64 0 0 0 55 56Z"
+              ></path></svg
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4"
+    >
+      <p class="text-sm text-slate-400">
+        &copy; {currentYear} Cemag. Todos los derechos reservados.
+      </p>
+      <div class="flex gap-4 text-sm text-slate-400">
+        <p>Creado por JosttMe</p>
+      </div>
+    </div>
+  </div>
+</footer>
