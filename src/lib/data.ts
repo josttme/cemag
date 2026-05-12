@@ -11,7 +11,7 @@ export interface Product {
   patternType: string;
   sizes: string[];
   stock: number;
-  imageUrl: string;
+  images: string[];
 }
 
 export const products: Product[] = [
@@ -25,7 +25,11 @@ export const products: Product[] = [
     sizes: ['36', '37', '38', '39', '40'],
     stock: 15,
     // BEST PRACTICE: Solo guardamos el nombre del archivo exacto tal como está en Cloudflare
-    imageUrl: 'pantuflas-marfil.avif',
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
   },
   {
     id: 'prod-002',
@@ -36,7 +40,11 @@ export const products: Product[] = [
     patternType: 'Plataforma',
     sizes: ['36', '37', '38', '39', '40'],
     stock: 12,
-    imageUrl: 'pantuflas-marron.avif',
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
   },
   {
     id: 'prod-003',
@@ -47,6 +55,10 @@ export const products: Product[] = [
     patternType: 'Plataforma',
     sizes: ['36', '37', '38', '39', '40'],
     stock: 8,
-    imageUrl: 'pantuflas-rosado.avif',
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
   },
 ];

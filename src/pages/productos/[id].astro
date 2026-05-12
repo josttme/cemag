@@ -1,0 +1,58 @@
+---
+// src/pages/productos/[id].astro
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../lib/data';
+import ProductGallery from '../../components/react/ProductGallery';
+
+export async function getStaticPaths() {
+  return products.map((product) => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+
+// EL NUEVO ADAPTADOR:
+// Usamos .map() para transformar el array de strings ['foto1.avif', 'foto2.avif']
+// en un array de objetos [{url: '/images/foto1.avif', alt: '...'}, {...}]
+const galleryImages = product.images.map((imageName, index) => ({
+  url: `${r2Url}/${imageName}`,
+  alt: `${product.name} - Vista ${index + 1}`, // Genera alts dinámicos: "Pantuflas - Vista 1", "Vista 2"...
+}));
+---
+
+<Layout title={`${product.name} - Cemag`} description={product.description}>
+  {
+    /* El HTML queda exactamente igual porque el adaptador ya hizo el trabajo sucio */
+  }
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+      <section class="md:col-span-7">
+        <div class="sticky top-24">
+          <ProductGallery client:load images={galleryImages} />
+        </div>
+      </section>
+
+      <section class="md:col-span-5 flex flex-col gap-6">
+        <div>
+          <h1 class="text-3xl font-extrabold text-gray-900">{product.name}</h1>
+          <p class="text-lg text-gray-500 mt-1 capitalize">
+            {product.category}
+          </p>
+          <p class="text-2xl font-medium text-gray-900 mt-4">
+            ${product.price}
+          </p>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6 mt-2">
+          {
+            /* <SizeSelector client:load sizes={product.sizes} productId={product.id} /> */
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

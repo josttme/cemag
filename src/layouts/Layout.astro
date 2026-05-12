@@ -5,10 +5,12 @@ import Footer from '@/components/astro/Footer.astro';
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
 }
-
-const { title, description } = Astro.props;
+const {
+  title,
+  description = 'Cemag - La mejor tienda online de indumentaria y calzado.',
+} = Astro.props;
 import '@/styles/global.css';
 ---
 

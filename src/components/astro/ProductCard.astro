@@ -22,10 +22,14 @@ const r2Url = import.meta.env.PUBLIC_R2_URL;
 // Nota: Si subiste estas imágenes dentro de una carpeta "products" en tu bucket de R2,
 // la ruta debe ser `${r2Url}/products/${product.imageUrl}`.
 // Si las tiraste sueltas en la raíz del bucket, quítale el "/products".
-const finalImageUrl = `${r2Url}/${product.imageUrl}`;
+const finalImageUrl = `${r2Url}/${product.images[0]}`;
 ---
 
-<a class="group flex flex-col cursor-pointer">
+<a
+  href={`/productos/${product.id}`}
+  data-astro-prefetch="hover"
+  class="group flex flex-col cursor-pointer"
+>
   <div class="relative w-full aspect-square bg-[#f6f6f6] overflow-hidden mb-3">
     {
       /* 
