@@ -9,20 +9,15 @@ interface Props {
 
 const { product } = Astro.props;
 
+// Usamos nuestra función utilitaria si la creaste, o Intl directo
 const formattedPrice = new Intl.NumberFormat('es-AR', {
   style: 'currency',
   currency: 'ARS',
   maximumFractionDigits: 0,
 }).format(product.price);
 
-// 1. Obtenemos el dominio base de Cloudflare desde las variables de entorno
-const r2Url = import.meta.env.PUBLIC_R2_URL;
-
-// 2. Construimos la URL final.
-// Nota: Si subiste estas imágenes dentro de una carpeta "products" en tu bucket de R2,
-// la ruta debe ser `${r2Url}/products/${product.imageUrl}`.
-// Si las tiraste sueltas en la raíz del bucket, quítale el "/products".
-const finalImageUrl = `${r2Url}/${product.images[0]}`;
+// Extraemos la URL de la primera imagen de la primera variante (Best Practice de fallback)
+const finalImageUrl = product.variants[0]?.images[0]?.url || '/placeholder.jpg';
 ---
 
 <a
@@ -31,11 +26,6 @@ const finalImageUrl = `${r2Url}/${product.images[0]}`;
   class="group flex flex-col cursor-pointer"
 >
   <div class="relative w-full aspect-square bg-[#f6f6f6] overflow-hidden mb-3">
-    {
-      /* 
-      3. Usamos Image nativo con inferSize para que Astro gestione la foto de la nube.
-    */
-    }
     <Image
       src={finalImageUrl}
       alt={`Fotografía de ${product.name}`}
@@ -43,12 +33,10 @@ const finalImageUrl = `${r2Url}/${product.images[0]}`;
       class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
     />
   </div>
-
   <div class="flex flex-col gap-1 px-1">
     <h3 class="text-slate-900 font-medium text-base leading-tight">
       {product.name}
     </h3>
-
     <p class="text-slate-900 font-medium text-base mt-1">
       {formattedPrice}
     </p>

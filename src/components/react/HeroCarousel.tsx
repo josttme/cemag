@@ -33,7 +33,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
     <div className="relative w-full max-w-7xl mx-auto group">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y  ">
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             // 2. Quitamos el alto fijo en píxeles (h-[400px]) que teníamos antes
             <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 ">
               {/* 
@@ -54,6 +54,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                   src={slide.mobileImageUrl}
                   alt={slide.altText}
                   className="w-full h-full object-cover"
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  loading={index === 0 ? 'eager' : 'lazy'}
                 />
               </picture>
             </div>
