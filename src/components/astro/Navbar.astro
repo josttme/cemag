@@ -6,6 +6,7 @@
 import { ShoppingCart } from 'lucide-react';
 // 1. Importamos el componente nativo de imágenes de Astro
 import { Image } from 'astro:assets';
+import CartBadge from '../react/CartBadge';
 // Tomamos la URL base de nuestro .env para construir la ruta dinámicamente.
 const r2Url = import.meta.env.PUBLIC_R2_URL;
 const logoUrl = `${r2Url}/logo-cemag.avif`; // Asegúrate de que coincida con el nombre en tu R2
@@ -68,25 +69,14 @@ const logoUrl = `${r2Url}/logo-cemag.avif`; // Asegúrate de que coincida con el
     */
     }
     <div class="flex flex-1 justify-end">
-      <button
+      <a
+        href="/cart"
         class="relative p-2 text-slate-900 transition-colors hover:text-slate-600"
-        aria-label="Abrir carrito"
+        aria-label="Ver carrito"
       >
         <ShoppingCart className="h-6 w-6" />
-
-        {
-          /* 
-          Best Practice: Indicador visual (Badge) para el carrito.
-          Añadido para cuando implementes la lógica de React. 
-          Si está vacío, puedes ocultar este span.
-        */
-        }
-        <span
-          class="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white"
-        >
-          2
-        </span>
-      </button>
+        <CartBadge client:load />
+      </a>
     </div>
   </nav>
 </header>

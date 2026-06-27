@@ -1,0 +1,16 @@
+---
+// src/pages/cart.astro
+import Layout from '../layouts/Layout.astro';
+import CartList from '../components/react/CartList';
+---
+
+<Layout title="Bolsa de compras - Cemag">
+  <main class="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12">
+    <h1 class="text-3xl font-bold text-slate-900 mb-8">Bolsa</h1>
+
+    {
+      /* client:only="react" es otra forma genial de evitar SSR en componentes que dependen netamente del navegador */
+    }
+    <CartList client:only="react" />
+  </main>
+</Layout>
