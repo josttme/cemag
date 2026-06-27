@@ -1,6 +1,6 @@
 // src/components/react/CartBadge.tsx
 import { useStore } from '@nanostores/react';
-import { $cart } from '../../store/cartStore';
+import { $cart } from '@store/cartStore';
 
 export default function CartBadge() {
   // Nos suscribimos a los cambios del store

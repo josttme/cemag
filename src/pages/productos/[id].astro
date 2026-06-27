@@ -1,8 +1,8 @@
 ---
 // src/pages/productos/[id].astro
-import Layout from '../../layouts/Layout.astro';
-import { products } from '../../lib/data';
-import ProductConfigurator from '../../components/react/ProductConfigurator';
+import Layout from '@layouts/Layout.astro';
+import { products } from '@lib/data';
+import ProductConfigurator from '@components/react/ProductConfigurator';
 
 // Ahora Astro mapeará TODOS los productos del array real
 export async function getStaticPaths() {

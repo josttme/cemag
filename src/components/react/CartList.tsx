@@ -1,7 +1,7 @@
 // src/components/react/CartList.tsx
 import { useStore } from '@nanostores/react';
 import { useState, useEffect } from 'react';
-import { $cart, removeCartItem } from '../../store/cartStore';
+import { $cart, removeCartItem } from '@store/cartStore';
 
 export default function CartList() {
   const cart = useStore($cart);

@@ -1,7 +1,7 @@
 // src/components/react/ProductConfigurator.tsx
 import { useState } from 'react';
-import { addCartItem } from '../../store/cartStore';
-import type { Product, ProductVariant } from '../../lib/data';
+import { addCartItem } from '@store/cartStore';
+import type { Product, ProductVariant } from '@lib/data';
 
 interface Props {
   product: Product;

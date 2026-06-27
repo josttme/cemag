@@ -1,0 +1,1081 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: **/*.css, public/**/*
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/
+  components/
+    astro/
+      Footer.astro
+      Navbar.astro
+      ProductCard.astro
+    react/
+      HeroCarousel.tsx
+      ProductGallery.tsx
+      SizeSelector.tsx
+  layouts/
+    Layout.astro
+  lib/
+    data.ts
+  pages/
+    productos/
+      [id].astro
+    index.astro
+  types/
+    product.ts
+.eslintrc.cjs
+.gitignore
+.prettierrc
+astro.config.mjs
+package.json
+README.md
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/astro/Footer.astro">
+---
+// src/components/astro/Footer.astro
+import { Image } from 'astro:assets';
+// Ruta relativa a prueba de balas que configuramos en el paso anterior
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+const logoUrl = `${r2Url}/logo-cemag.avif`;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      {/* Columna 1: Marca y Logo */}
+      <div class="flex flex-col items-start gap-4">
+        <a
+          href="/"
+          class="flex items-center gap-2"
+          aria-label="Volver al inicio"
+        >
+          <Image
+            src={logoUrl}
+            alt="Logotipo de Cemag"
+            inferSize={true}
+            class="h-10 rounded-full w-auto object-contain"
+            loading="eager"
+          />
+          <span class="text-2xl font-bold tracking-tight text-[#eab4ae]">
+            Cemag
+          </span>
+        </a>
+      </div>
+
+      {/* Columna 2: Contacto y Dirección */}
+      <div class="flex flex-col gap-4">
+        <h3
+          class="text-sm font-semibold text-slate-900 uppercase tracking-wider"
+        >
+          Contacto
+        </h3>
+        <address class="not-italic flex flex-col gap-2 text-sm text-slate-500">
+          <p>Av. Caseros 3000, Parque Patricios</p>
+          <p>Buenos Aires, Argentina</p>
+          <a
+            href="mailto:hola@cemag.com"
+            class="hover:text-slate-900 transition-colors"
+          >
+            hola@cemag.com
+          </a>
+        </address>
+      </div>
+
+      {/* Columna 3: Redes Sociales (SVGs Nativos - Zero Dependency) */}
+      <div class="flex flex-col gap-4">
+        <h3
+          class="text-sm font-semibold text-slate-900 uppercase tracking-wider"
+        >
+          Síguenos
+        </h3>
+        <div class="flex gap-4 fill-slate-400">
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="Instagram"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M128 80a48 48 0 1 0 48 48 48 48 0 0 0-48-48m0 80a32 32 0 1 1 32-32 32 32 0 0 1-32 32m48-136H80a56 56 0 0 0-56 56v96a56 56 0 0 0 56 56h96a56 56 0 0 0 56-56V80a56 56 0 0 0-56-56m40 152a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40V80a40 40 0 0 1 40-40h96a40 40 0 0 1 40 40ZM192 76a12 12 0 1 1-12-12 12 12 0 0 1 12 12"
+              ></path></svg
+            >
+          </a>
+
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="Facebook"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M128 24a104 104 0 1 0 104 104A104 104 0 0 0 128 24m8 192v-64h24a8 8 0 0 0 0-16h-24v-24a16 16 0 0 1 16-16h16a8 8 0 0 0 0-16h-16a32 32 0 0 0-32 32v24H96a8 8 0 0 0 0 16h24v64a88 88 0 1 1 16 0"
+              ></path></svg
+            >
+          </a>
+
+          <a
+            href="#"
+            class="text-slate-400 hover:fill-slate-900 transition-colors"
+            aria-label="TikTok"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+              ><path
+                d="M224 72a48 48 0 0 1-48-48 8 8 0 0 0-8-8h-40a8 8 0 0 0-8 8v132a20 20 0 1 1-29-18 8 8 0 0 0 5-7V88a8 8 0 0 0-9-8c-36 6-63 39-63 76a76 76 0 0 0 152 0v-40a103 103 0 0 0 48 12 8 8 0 0 0 8-8V80a8 8 0 0 0-8-8m-8 40a87 87 0 0 1-43-17 8 8 0 0 0-13 7v54a60 60 0 0 1-120 0c0-26 17-49 40-58v28a36 36 0 1 0 56 30V32h25a64 64 0 0 0 55 56Z"
+              ></path></svg
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4"
+    >
+      <p class="text-sm text-slate-400">
+        &copy; {currentYear} Cemag. Todos los derechos reservados.
+      </p>
+      <div class="flex gap-4 text-sm text-slate-400">
+        <p>Creado por JosttMe</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</file>
+
+<file path="src/components/astro/Navbar.astro">
+---
+// src/components/astro/Navbar.astro
+
+// Asumiendo que instalaste lucide-react y vas a usar Astro para renderizarlos.
+// Nota: En Astro, si usas íconos de React sin interactividad, no necesitas `client:load`.
+import { ShoppingCart } from 'lucide-react';
+// 1. Importamos el componente nativo de imágenes de Astro
+import { Image } from 'astro:assets';
+// Tomamos la URL base de nuestro .env para construir la ruta dinámicamente.
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+const logoUrl = `${r2Url}/logo-cemag.avif`; // Asegúrate de que coincida con el nombre en tu R2
+---
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-slate-200 bg-slate-50/80 backdrop-blur-md"
+>
+  {/* El nav es el contenedor principal */}
+  <nav
+    class="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8"
+    aria-label="Navegación principal"
+  >
+    {/* Columna 1: LOGO (Izquierda) */}
+    <div class="flex flex-1 justify-start">
+      <a
+        href="/"
+        class="flex items-center gap-2 transition-opacity hover:opacity-80"
+        aria-label="Volver al inicio"
+      >
+        {
+          /* 
+          Best Practice: Astro procesará esto, lo convertirá a un formato ultra ligero 
+          y le pondrá los atributos width y height correctos automáticamente.
+          
+          Clases de Tailwind:
+          - h-8 o h-10: Restringe la altura máxima para que encaje en el Navbar.
+          - w-auto: Mantiene la proporción original de la imagen.
+          - object-contain: Asegura que el logo no se recorte.
+        */
+        }
+
+        <Image
+          src={logoUrl}
+          alt="Logotipo de Cemag"
+          inferSize={true}
+          class="h-10 rounded-full w-auto object-contain"
+          loading="eager"
+        />
+      </a>
+    </div>
+
+    {
+      /* 
+      Columna 2: NOMBRE (Centro)
+      Al estar rodeado de dos contenedores flex-1, este bloque se mantendrá 
+      perfectamente centrado matemáticamente.
+    */
+    }
+    <div class="flex shrink-0 justify-center">
+      <a href="/" class="font-bold text-2xl tracking-tight text-[#eab4ae]">
+        <h1>CEMAG</h1>
+      </a>
+    </div>
+
+    {
+      /* 
+      Columna 3: CARRITO (Derecha)
+      flex-1 y justify-end empujan el contenido pegado al borde derecho.
+    */
+    }
+    <div class="flex flex-1 justify-end">
+      <button
+        class="relative p-2 text-slate-900 transition-colors hover:text-slate-600"
+        aria-label="Abrir carrito"
+      >
+        <ShoppingCart className="h-6 w-6" />
+
+        {
+          /* 
+          Best Practice: Indicador visual (Badge) para el carrito.
+          Añadido para cuando implementes la lógica de React. 
+          Si está vacío, puedes ocultar este span.
+        */
+        }
+        <span
+          class="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white"
+        >
+          2
+        </span>
+      </button>
+    </div>
+  </nav>
+</header>
+</file>
+
+<file path="src/components/react/HeroCarousel.tsx">
+// src/components/react/HeroCarousel.tsx
+import { useCallback } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+// 1. Actualizamos la interfaz para exigir ambas versiones de la imagen
+interface Slide {
+  id: string;
+  mobileImageUrl: string;
+  desktopImageUrl: string;
+  altText: string;
+}
+
+interface HeroCarouselProps {
+  slides: Slide[];
+}
+
+export default function HeroCarousel({ slides }: HeroCarouselProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
+  ]);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  return (
+    <div className="relative w-full max-w-7xl mx-auto group">
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex touch-pan-y  ">
+          {slides.map((slide) => (
+            // 2. Quitamos el alto fijo en píxeles (h-[400px]) que teníamos antes
+            <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 ">
+              {/* 
+                3. Arquitectura CSS (Tailwind):
+                - aspect-[5/4]: Obliga al contenedor en móviles a ser exactamente 5:4.
+                - md:aspect-video: En tablets/desktop (768px o más), cambia la proporción a 16:9.
+                Esto previene el "Layout Shift" (que la página salte mientras carga la foto).
+              */}
+              <picture className="block w-full  md:aspect-video">
+                {/* Si la pantalla es 768px o mayor, el navegador usa esta imagen */}
+                <source
+                  media="(min-width: 768px)"
+                  srcSet={slide.desktopImageUrl}
+                />
+
+                {/* Fallback obligatorio: Si es móvil o no soporta <picture>, usa esta */}
+                <img
+                  src={slide.mobileImageUrl}
+                  alt={slide.altText}
+                  className="w-full h-full object-cover"
+                />
+              </picture>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Botones (sin cambios) */}
+      <button
+        onClick={scrollPrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-2 rounded-full shadow-lg backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 md:flex hidden items-center justify-center"
+        aria-label="Imagen anterior"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button
+        onClick={scrollNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-2 rounded-full shadow-lg backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 md:flex hidden items-center justify-center"
+        aria-label="Imagen siguiente"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/react/ProductGallery.tsx">
+// src/components/react/ProductGallery.tsx
+import { useState } from 'react';
+
+interface Image {
+  url: string;
+  alt: string;
+}
+
+interface ProductGalleryProps {
+  images: Image[];
+}
+
+export default function ProductGallery({ images }: ProductGalleryProps) {
+  // Estado para controlar el índice de la imagen principal seleccionada
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Funciones para los botones de navegación (con lógica de loop)
+  const showNext = () => {
+    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const showPrev = () => {
+    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  // Prevenir errores si la lista de imágenes está vacía
+  if (!images || images.length === 0) {
+    return (
+      <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+        No hay imágenes
+      </div>
+    );
+  }
+
+  const currentImage = images[selectedIndex];
+  return (
+    // Cambiamos Grid por Flex (row) para garantizar que estén uno al lado del otro
+    <div className="flex flex-row gap-4 w-full">
+      {/* 1. COLUMNA DE MINIATURAS (Fija a la izquierda) */}
+      <aside className="flex flex-col gap-2 w-16 flex-shrink-0 max-h-[600px] overflow-y-auto scrollbar-hide">
+        {images.map((image, index) => {
+          const isActive = index === selectedIndex;
+          return (
+            <button
+              key={`${image.url}-${index}`}
+              onClick={() => setSelectedIndex(index)}
+              onMouseEnter={() => setSelectedIndex(index)}
+              className={`relative aspect-square w-full overflow-hidden rounded-md transition-all ${
+                isActive
+                  ? 'border-2 border-black p-[2px]'
+                  : 'border border-gray-200 hover:border-gray-400'
+              }`}
+            >
+              <img
+                src={image.url}
+                alt={image.alt}
+                className="w-full h-full object-cover rounded-[4px]"
+              />
+            </button>
+          );
+        })}
+      </aside>
+
+      {/* 2. ÁREA DE IMAGEN PRINCIPAL (Ocupa todo el resto del espacio) */}
+      <div className="relative group aspect-square flex-grow overflow-hidden rounded-lg bg-gray-50 border border-gray-100">
+        <img
+          src={currentImage.url}
+          alt={currentImage.alt}
+          className="w-full h-full object-contain"
+        />
+        {/* ... (Aquí dejas los botones <button> de Anterior/Siguiente que ya tenías) ... */}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/react/SizeSelector.tsx">
+import { useState } from 'react';
+
+interface SizeSelectorProps {
+  sizes: string[];
+  productId: string;
+}
+
+export default function SizeSelector({ sizes, productId }: SizeSelectorProps) {
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      setError(true); // Disparamos el error visual si no hay talle
+      return;
+    }
+    setError(false);
+
+    // Aquí irá tu lógica real de agregar al carrito (ej. Zustand, Context, o LocalStorage)
+    console.log(`Agregado: Producto ${productId}, Talle ${selectedSize}`);
+    alert(`Agregado a la bolsa: Talle ${selectedSize}`);
+  };
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-medium text-gray-900">Selecciona tu talla</h3>
+          <button className="text-gray-500 hover:text-black text-sm underline transition-colors">
+            Guía de tallas
+          </button>
+        </div>
+
+        {/* Grilla de talles estilo Nike (3 columnas) */}
+        <div className="grid grid-cols-3 gap-2">
+          {sizes.map((size) => {
+            const isSelected = selectedSize === size;
+            return (
+              <button
+                key={size}
+                onClick={() => {
+                  setSelectedSize(size);
+                  setError(false); // Limpiamos el error al seleccionar
+                }}
+                className={`py-3 text-center border rounded-md transition-all duration-200 ${
+                  isSelected
+                    ? 'border-black ring-1 ring-black text-black font-medium' // Estado activo
+                    : 'border-gray-300 text-gray-700 hover:border-black' // Estado inactivo
+                }`}
+              >
+                {size}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Mensaje de error condicional */}
+        {error && (
+          <p className="text-red-500 text-sm mt-2 font-medium">
+            Por favor, selecciona una talla.
+          </p>
+        )}
+      </div>
+
+      {/* Botón de compra integrado en el mismo componente para leer el estado del talle */}
+      <button
+        onClick={handleAddToCart}
+        className="w-full bg-black text-white py-4 rounded-full font-medium hover:bg-gray-800 active:scale-[0.98] transition-all duration-200 mt-2"
+      >
+        Agregar a la bolsa
+      </button>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/productos/[id].astro">
+---
+// src/pages/productos/[id].astro
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../lib/data';
+import ProductGallery from '../../components/react/ProductGallery';
+
+export async function getStaticPaths() {
+  return products.map((product) => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+
+// EL NUEVO ADAPTADOR:
+// Usamos .map() para transformar el array de strings ['foto1.avif', 'foto2.avif']
+// en un array de objetos [{url: '/images/foto1.avif', alt: '...'}, {...}]
+const galleryImages = product.images.map((imageName, index) => ({
+  url: `${r2Url}/${imageName}`,
+  alt: `${product.name} - Vista ${index + 1}`, // Genera alts dinámicos: "Pantuflas - Vista 1", "Vista 2"...
+}));
+---
+
+<Layout title={`${product.name} - Cemag`} description={product.description}>
+  {
+    /* El HTML queda exactamente igual porque el adaptador ya hizo el trabajo sucio */
+  }
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+      <section class="md:col-span-7">
+        <div class="sticky top-24">
+          <ProductGallery client:load images={galleryImages} />
+        </div>
+      </section>
+
+      <section class="md:col-span-5 flex flex-col gap-6">
+        <div>
+          <h1 class="text-3xl font-extrabold text-gray-900">{product.name}</h1>
+          <p class="text-lg text-gray-500 mt-1 capitalize">
+            {product.category}
+          </p>
+          <p class="text-2xl font-medium text-gray-900 mt-4">
+            ${product.price}
+          </p>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6 mt-2">
+          {
+            /* <SizeSelector client:load sizes={product.sizes} productId={product.id} /> */
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+</file>
+
+<file path="src/types/product.ts">
+// src/types/product.ts
+export interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  images: { url: string; alt: string }[];
+  colors: { id: string; hex: string; name: string }[];
+  sizes: string[];
+}
+</file>
+
+<file path=".eslintrc.cjs">
+module.exports = {
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:astro/recommended',
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  overrides: [
+    {
+      files: ['*.astro'],
+      parser: 'astro-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
+      },
+    },
+  ],
+  rules: {
+    'react/react-in-jsx-scope': 'off', // Ya no es necesario en React 17+
+  },
+};
+</file>
+
+<file path=".prettierrc">
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
+}
+</file>
+
+<file path="README.md">
+# Astro Starter Kit: Basics
+
+```sh
+npm create astro@latest -- --template basics
+```
+
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+
+## 🚀 Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
+└── package.json
+```
+
+To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+</file>
+
+<file path="src/components/astro/ProductCard.astro">
+---
+// src/components/astro/ProductCard.astro
+import type { Product } from '@/lib/data';
+import { Image } from 'astro:assets';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const formattedPrice = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  maximumFractionDigits: 0,
+}).format(product.price);
+
+// 1. Obtenemos el dominio base de Cloudflare desde las variables de entorno
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+
+// 2. Construimos la URL final.
+// Nota: Si subiste estas imágenes dentro de una carpeta "products" en tu bucket de R2,
+// la ruta debe ser `${r2Url}/products/${product.imageUrl}`.
+// Si las tiraste sueltas en la raíz del bucket, quítale el "/products".
+const finalImageUrl = `${r2Url}/${product.images[0]}`;
+---
+
+<a
+  href={`/productos/${product.id}`}
+  data-astro-prefetch="hover"
+  class="group flex flex-col cursor-pointer"
+>
+  <div class="relative w-full aspect-square bg-[#f6f6f6] overflow-hidden mb-3">
+    {
+      /* 
+      3. Usamos Image nativo con inferSize para que Astro gestione la foto de la nube.
+    */
+    }
+    <Image
+      src={finalImageUrl}
+      alt={`Fotografía de ${product.name}`}
+      inferSize={true}
+      class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+    />
+  </div>
+
+  <div class="flex flex-col gap-1 px-1">
+    <h3 class="text-slate-900 font-medium text-base leading-tight">
+      {product.name}
+    </h3>
+
+    <p class="text-slate-900 font-medium text-base mt-1">
+      {formattedPrice}
+    </p>
+  </div>
+</a>
+</file>
+
+<file path="src/lib/data.ts">
+// src/lib/data.ts
+
+export type Category = 'pantuflas' | 'pantalones' | 'accesorios';
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: Category;
+  patternType: string;
+  sizes: string[];
+  stock: number;
+  images: string[];
+}
+
+export const products: Product[] = [
+  {
+    id: 'prod-001',
+    name: 'Pantuflas Marfil Zueco Plataforma',
+    description: 'Zueco plataforma ideal para el confort en casa.',
+    price: 20000,
+    category: 'accesorios',
+    patternType: 'Plataforma',
+    sizes: ['36', '37', '38', '39', '40'],
+    stock: 15,
+    // BEST PRACTICE: Solo guardamos el nombre del archivo exacto tal como está en Cloudflare
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
+  },
+  {
+    id: 'prod-002',
+    name: 'Pantuflas Marron Zueco Plataforma',
+    description: 'Zueco plataforma ideal para el confort en casa.',
+    price: 20000,
+    category: 'accesorios',
+    patternType: 'Plataforma',
+    sizes: ['36', '37', '38', '39', '40'],
+    stock: 12,
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
+  },
+  {
+    id: 'prod-003',
+    name: 'Pantuflas Rosas Zueco Plataforma',
+    description: 'Zueco plataforma ideal para el confort en casa.',
+    price: 20000,
+    category: 'accesorios',
+    patternType: 'Plataforma',
+    sizes: ['36', '37', '38', '39', '40'],
+    stock: 8,
+    images: [
+      'pantuflas-marfil.avif', // Índice 0: Foto principal
+      'pantuflas-marron.avif', // Índice 1: Foto secundaria
+      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    ],
+  },
+];
+</file>
+
+<file path="src/pages/index.astro">
+---
+// src/pages/index.astro
+import Layout from '@/layouts/Layout.astro';
+import ProductCard from '@/components/astro/ProductCard.astro';
+import HeroCarousel from '@/components/react/HeroCarousel';
+import { products } from '@/lib/data';
+
+// 2. Armamos la estructura de datos respetando la nueva interfaz
+// 1. Tomamos la ruta base de tu nube (la misma que usamos para el logo)
+const r2Url = import.meta.env.PUBLIC_R2_URL;
+
+// 2. Armamos la estructura de datos concatenando la URL.
+// ¡Mira lo limpio que queda sin las importaciones locales!
+const heroSlides = [
+  {
+    id: 'slide-1',
+    mobileImageUrl: `${r2Url}/pantufla-claro-mobile.avif`,
+    desktopImageUrl: `${r2Url}/pantufla-claro-desktop.avif`,
+    altText: 'Nueva colección de temporada',
+  },
+  {
+    id: 'slide-2',
+    mobileImageUrl: `${r2Url}/pantufla-marron-mobile.avif`,
+    // 🚨 Tech Lead warning: Corregí un error tipográfico aquí.
+    // En tu código original decía "dektop" sin la 's'.
+    // Asegúrate de que en Cloudflare el archivo se llame exactamente así.
+    desktopImageUrl: `${r2Url}/pantufla-marron-dektop.avif`,
+    altText: 'Pantuflas marrones exclusivas',
+  },
+  {
+    id: 'slide-3',
+    mobileImageUrl: `${r2Url}/pantufla-rosa-mobile.avif`,
+    desktopImageUrl: `${r2Url}/pantufla-rosa-desktop.avif`,
+    altText: 'Pantuflas rosas de confort',
+  },
+];
+---
+
+<Layout
+  title="CEMAG"
+  description="Catálogo de remeras y pantalones con moldería de alta calidad."
+>
+  <section>
+    <HeroCarousel slides={heroSlides} client:load />
+  </section>
+
+  <section class="py-10">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6 px-1">Pantuflas</h2>
+    <div
+      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-10"
+    >
+      {products.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
+</Layout>
+</file>
+
+<file path=".gitignore">
+# =========================
+# 1. Dependencias & Caché
+# =========================
+node_modules/
+.pnp/
+.pnp.js
+.npm/
+.eslintcache
+*.tsbuildinfo
+
+# =========================
+# 2. Build & Salida (Astro / Vite)
+# =========================
+dist/
+.astro/
+.vercel/
+.netlify/
+
+# =========================
+# 3. Entorno y Secretos (¡Crítico!)
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# 4. Logs de depuración
+# =========================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# 5. Archivos de Sistema Operativo
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+# Linux (Fedora/Ubuntu)
+*~
+.Trash-*
+
+# =========================
+# 6. Editores / IDEs
+# =========================
+.idea/
+.project
+*.sublime-workspace
+
+# Nota sobre VS Code: 
+# NO ignoramos la carpeta .vscode/ completa porque queremos 
+# compartir el settings.json de Prettier/ESLint con el equipo.
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+</file>
+
+<file path="astro.config.mjs">
+// @ts-check
+import { defineConfig } from 'astro/config';
+
+import tailwindcss from '@tailwindcss/vite';
+
+import react from '@astrojs/react';
+
+// https://astro.build/config
+export default defineConfig({
+  vite: {
+    plugins: [tailwindcss()],
+  },
+
+  integrations: [react()],
+  image: {
+    domains: ['pub-7e3025ea79e842a6ae8074f0babc6ff6.r2.dev'], // Reemplaza con tu dominio real de Cloudflare R2 o tu dominio personalizado
+  },
+});
+</file>
+
+<file path="tsconfig.json">
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"]
+    }
+  }
+}
+</file>
+
+<file path="src/layouts/Layout.astro">
+---
+// src/layouts/Layout.astro
+import Navbar from '@/components/astro/Navbar.astro';
+import Footer from '@/components/astro/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Cemag - La mejor tienda online de indumentaria y calzado.',
+} = Astro.props;
+import '@/styles/global.css';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+
+  <body
+    class="bg-[#f2ead4] text-slate-900 antialiased min-h-screen flex flex-col"
+  >
+    <Navbar />
+
+    <main class="grow w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <slot />
+    </main>
+    {/* 2. Inyectamos el Footer estático */}
+    <Footer />
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "cemag",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "5.0.4",
+    "@tailwindcss/vite": "4.2.4",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "astro": "6.2.1",
+    "embla-carousel-autoplay": "8.6.0",
+    "embla-carousel-react": "8.6.0",
+    "lucide-react": "1.14.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "tailwindcss": "4.2.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "8.59.1",
+    "@typescript-eslint/parser": "8.59.1",
+    "eslint": "9.39.4",
+    "eslint-plugin-astro": "1.7.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react": "7.37.5",
+    "prettier": "3.8.3",
+    "prettier-plugin-astro": "0.14.1"
+  }
+}
+</file>
+
+</files>
