@@ -60,4 +60,4 @@ $RECYCLE.BIN/
 # compartir el settings.json de Prettier/ESLint con el equipo.
 .vscode/*
 !.vscode/settings.json
-!.vscode/extensions.json
+!.vscode/extensions.jsonrepomix-output.xml
