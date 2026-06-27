@@ -1,64 +1,69 @@
 // src/lib/data.ts
 
-export type Category = 'pantuflas' | 'pantalones' | 'accesorios';
+export interface ProductVariant {
+  id: string;
+  colorName: string;
+  swatchUrl: string;
+  images: { url: string; alt: string }[];
+}
 
 export interface Product {
   id: string;
   name: string;
-  description: string;
+  category: string;
   price: number;
-  category: Category;
-  patternType: string;
+  description: string;
   sizes: string[];
-  stock: number;
-  images: string[];
+  variants: ProductVariant[];
 }
+
+const r2Url = import.meta.env.PUBLIC_R2_URL;
 
 export const products: Product[] = [
   {
-    id: 'prod-001',
-    name: 'Pantuflas Marfil Zueco Plataforma',
-    description: 'Zueco plataforma ideal para el confort en casa.',
-    price: 20000,
+    id: 'pantuflas-zueco-plat',
+    name: 'Pantuflas Zueco Plataforma',
     category: 'accesorios',
-    patternType: 'Plataforma',
+    price: 20000,
+    description: 'Zueco plataforma ideal para el confort en casa.',
     sizes: ['36', '37', '38', '39', '40'],
-    stock: 15,
-    // BEST PRACTICE: Solo guardamos el nombre del archivo exacto tal como está en Cloudflare
-    images: [
-      'pantuflas-marfil.avif', // Índice 0: Foto principal
-      'pantuflas-marron.avif', // Índice 1: Foto secundaria
-      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
+    variants: [
+      {
+        id: 'var-marfil',
+        colorName: 'Marfil',
+        // Idealmente, el swatch es una imagen pequeña cuadrada enfocada en el color/textura
+        swatchUrl: `${r2Url}/pantuflas-marfil.avif`,
+        images: [
+          {
+            url: `${r2Url}/pantuflas-marfil.avif`,
+            alt: 'Pantuflas Zueco Marfil Frontal',
+          },
+          // Aquí agregarías más vistas de la variante marfil si las tuvieras
+        ],
+      },
+      {
+        id: 'var-marron',
+        colorName: 'Marrón',
+        swatchUrl: `${r2Url}/pantuflas-marron.avif`,
+        images: [
+          {
+            url: `${r2Url}/pantuflas-marron.avif`,
+            alt: 'Pantuflas Zueco Marrón Frontal',
+          },
+        ],
+      },
+      {
+        id: 'var-rosa',
+        colorName: 'Rosa',
+        swatchUrl: `${r2Url}/pantuflas-rosado.avif`,
+        images: [
+          {
+            url: `${r2Url}/pantuflas-rosado.avif`,
+            alt: 'Pantuflas Zueco Rosa Frontal',
+          },
+        ],
+      },
     ],
   },
-  {
-    id: 'prod-002',
-    name: 'Pantuflas Marron Zueco Plataforma',
-    description: 'Zueco plataforma ideal para el confort en casa.',
-    price: 20000,
-    category: 'accesorios',
-    patternType: 'Plataforma',
-    sizes: ['36', '37', '38', '39', '40'],
-    stock: 12,
-    images: [
-      'pantuflas-marfil.avif', // Índice 0: Foto principal
-      'pantuflas-marron.avif', // Índice 1: Foto secundaria
-      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
-    ],
-  },
-  {
-    id: 'prod-003',
-    name: 'Pantuflas Rosas Zueco Plataforma',
-    description: 'Zueco plataforma ideal para el confort en casa.',
-    price: 20000,
-    category: 'accesorios',
-    patternType: 'Plataforma',
-    sizes: ['36', '37', '38', '39', '40'],
-    stock: 8,
-    images: [
-      'pantuflas-marfil.avif', // Índice 0: Foto principal
-      'pantuflas-marron.avif', // Índice 1: Foto secundaria
-      'pantuflas-rosado.avif', // Índice 2: Foto terciaria
-    ],
-  },
+  // Aquí puedes seguir agregando más productos completos...
 ];
