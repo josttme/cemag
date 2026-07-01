@@ -1,5 +1,15 @@
 // src/lib/storefront.ts
 
+// 1. Importamos el tipo nativo de Astro para imágenes
+import type { ImageMetadata } from 'astro';
+
+// 2. Importamos TUS imágenes reales
+import imgRemeras from '@assets/categories/remeras.png';
+import imgPantalones from '@assets/categories/pantalones.png';
+import imgBuzos from '@assets/categories/buzos.png';
+import imgPantuflas from '@assets/categories/pantuflas.png';
+import imgAccesorios from '@assets/categories/accesorios.png';
+
 //* ============================================ *//
 //* **************** HERO SLIDE **************** *//
 //* ============================================ *//
@@ -63,7 +73,7 @@ export const getActiveHeroSlides = (): HeroSlide[] => {
 export interface CategoryNav {
   id: string;
   label: string;
-  imageUrl: string;
+  image: ImageMetadata;
   link: string;
 }
 
@@ -72,31 +82,31 @@ export const categoryNavData: CategoryNav[] = [
   {
     id: 'cat-remeras',
     label: 'Remeras',
-    imageUrl: 'https://placehold.co/200x200/f8f9fa/1a1a1a?text=Remeras',
+    image: imgRemeras,
     link: '/colecciones/remeras',
   },
   {
     id: 'cat-pantalones',
     label: 'Pantalones',
-    imageUrl: 'https://placehold.co/200x200/f8f9fa/1a1a1a?text=Pantalones',
+    image: imgPantalones,
     link: '/colecciones/pantalones',
   },
   {
     id: 'cat-buzos',
     label: 'Buzos',
-    imageUrl: 'https://placehold.co/200x200/f8f9fa/1a1a1a?text=Buzos',
+    image: imgBuzos,
     link: '/colecciones/buzos',
   },
   {
     id: 'cat-pantuflas',
     label: 'Pantuflas',
-    imageUrl: 'https://placehold.co/200x200/f8f9fa/1a1a1a?text=Pantuflas',
+    image: imgPantuflas,
     link: '/colecciones/pantuflas',
   },
   {
     id: 'cat-accesorios',
     label: 'Accesorios',
-    imageUrl: 'https://placehold.co/200x200/f8f9fa/1a1a1a?text=Accesorios',
+    image: imgAccesorios,
     link: '/colecciones/accesorios',
   },
 ];
