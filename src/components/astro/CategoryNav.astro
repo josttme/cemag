@@ -1,0 +1,58 @@
+---
+// src/components/astro/CategoryNav.astro
+
+import type { CategoryNav } from '@lib/storefront';
+
+interface Props {
+  categories: CategoryNav[];
+}
+
+const { categories } = Astro.props;
+---
+
+{
+  /* 
+  Best Practice CSS: 
+  - overflow-x-auto y snap-x permiten hacer "swipe" fluido en móviles.
+  - scrollbar-hide (que Tailwind no trae por defecto en v4, la simularemos con CSS).
+*/
+}
+<div class="w-full py-6">
+  <div
+    class="flex overflow-x-auto snap-x snap-mandatory hide-scroll gap-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+  >
+    {
+      categories.map((cat) => (
+        <a
+          href={cat.link}
+          class="flex flex-col items-center gap-2 shrink-0 snap-start group"
+        >
+          {/* Círculo de la imagen */}
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-[#f6f6f6] border border-slate-200 transition-all group-hover:border-slate-900 group-hover:shadow-md">
+            <img
+              src={cat.imageUrl}
+              alt={`Ver categoría ${cat.label}`}
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              loading="lazy"
+            />
+          </div>
+          {/* Nombre de la categoría */}
+          <span class="text-xs sm:text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">
+            {cat.label}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* Utilidad para ocultar la barra de scroll molesta en Windows/Android, manteniendo el scroll táctil */
+  .hide-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+</style>
