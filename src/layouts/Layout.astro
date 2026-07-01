@@ -2,6 +2,8 @@
 // src/layouts/Layout.astro
 import Navbar from '@components/astro/Navbar.astro';
 import Footer from '@components/astro/Footer.astro';
+// 1. Importamos el enrutador de cliente de Astro
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
@@ -23,7 +25,11 @@ import '@/styles/global.css';
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+
+    {/* 2. Lo inyectamos en el head */}
+    <ClientRouter />
   </head>
+  <!-- ... resto del body igual ... -->
 
   <body
     class="bg-[#f2ead4] text-slate-900 antialiased min-h-screen flex flex-col"
