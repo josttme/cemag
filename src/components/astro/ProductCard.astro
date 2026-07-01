@@ -1,7 +1,6 @@
 ---
 // src/components/astro/ProductCard.astro
-import type { Product } from '@/lib/data';
-import { Image } from 'astro:assets';
+import type { Product } from '@lib/data';
 
 interface Props {
   product: Product;
@@ -9,36 +8,65 @@ interface Props {
 
 const { product } = Astro.props;
 
-// Usamos nuestra función utilitaria si la creaste, o Intl directo
-const formattedPrice = new Intl.NumberFormat('es-AR', {
-  style: 'currency',
-  currency: 'ARS',
-  maximumFractionDigits: 0,
-}).format(product.price);
-
-// Extraemos la URL de la primera imagen de la primera variante (Best Practice de fallback)
-const finalImageUrl = product.variants[0]?.images[0]?.url || '/placeholder.jpg';
+// 1. Obtenemos la imagen frontal del primer color disponible
+const mainImage = product.variants[0]?.images[0];
+// 2. Generamos la URL amigable para el SEO
+const productUrl = `/productos/${product.slug}`;
 ---
 
-<a
-  href={`/productos/${product.id}`}
-  data-astro-prefetch="hover"
-  class="group flex flex-col cursor-pointer"
->
-  <div class="relative w-full aspect-square bg-[#f6f6f6] overflow-hidden mb-3">
-    <Image
-      src={finalImageUrl}
-      alt={`Fotografía de ${product.name}`}
-      inferSize={true}
-      class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-    />
+<a href={productUrl} class="group flex flex-col gap-3 cursor-pointer">
+  {/* Contenedor de la Imagen con Aspect Ratio de Indumentaria (4:5) */}
+  <div
+    class="relative aspect-4/5 overflow-hidden rounded-xl bg-[#f6f6f6] border border-slate-100"
+  >
+    {
+      mainImage && (
+        <img
+          src={mainImage.url}
+          alt={mainImage.alt}
+          class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          loading="lazy"
+        />
+      )
+    }
   </div>
+
+  {/* Información de la Prenda */}
   <div class="flex flex-col gap-1 px-1">
-    <h3 class="text-slate-900 font-medium text-base leading-tight">
-      {product.name}
-    </h3>
-    <p class="text-slate-900 font-medium text-base mt-1">
-      {formattedPrice}
+    <div class="flex justify-between items-start gap-2">
+      <h3 class="text-sm md:text-base font-medium text-slate-900 line-clamp-1">
+        {product.name}
+      </h3>
+      <p
+        class="text-sm md:text-base font-medium text-slate-900 whitespace-nowrap"
+      >
+        ${product.price.toLocaleString('es-AR')}
+      </p>
+    </div>
+
+    {/* Mostramos el textil para aportar valor */}
+    <p class="text-xs text-slate-500 line-clamp-1">
+      {product.details.fabric}
     </p>
+
+    {/* Swatches (Círculos de Colores Disponibles) */}
+    <div class="flex items-center gap-1.5 mt-2">
+      {
+        product.variants.map((variant) => (
+          <div
+            class="w-4 h-4 rounded-full border border-slate-200 shadow-sm"
+            style={`background-image: url(${variant.swatchUrl}); background-size: cover;`}
+            title={variant.colorName}
+          />
+        ))
+      }
+      {
+        product.variants.length > 1 && (
+          <span class="text-[10px] text-slate-400 ml-1">
+            {product.variants.length} colores
+          </span>
+        )
+      }
+    </div>
   </div>
 </a>

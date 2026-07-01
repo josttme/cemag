@@ -7,12 +7,11 @@ import ProductConfigurator from '@components/react/ProductConfigurator';
 // Ahora Astro mapeará TODOS los productos del array real
 export async function getStaticPaths() {
   return products.map((product) => ({
-    // Usamos product.slug para generar la URL limpia
-    params: { id: product.slug },
+    // EL FIX: Cambiamos 'id' por 'slug'
+    params: { slug: product.slug },
     props: { product },
   }));
 }
-
 const { product } = Astro.props;
 ---
 
