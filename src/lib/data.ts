@@ -8,7 +8,12 @@ export type Category =
   | 'buzos'
   | 'accesorios'
   | 'calzado';
-export type Fit = 'Oversize' | 'Regular Fit' | 'Slim Fit' | 'Boxy Fit';
+export type Fit =
+  | 'Oversize'
+  | 'Regular Fit'
+  | 'Slim Fit'
+  | 'Boxy Fit'
+  | 'Pierna Recta';
 
 // 2. Control de Inventario Granular
 // Cada talle tiene su propio control de stock.
@@ -21,8 +26,8 @@ export interface SizeStock {
 export interface ProductVariant {
   id: string; // ej: 'var-negro'
   colorName: string; // ej: 'Negro Profundo'
-  swatchUrl: string; // Miniatura del color/textura
-  images: { url: string; alt: string }[];
+  imageFolder: string; // <-- NUEVO: Agregamos la ruta de la carpeta base de esta variante
+  images: { filename: string; alt: string }[]; // <-- EL FIX: Cambiamos 'url' por 'filename'
   inventory: SizeStock[]; // <-- ARCHITECTURE WIN: El stock vive dentro del color
 }
 
@@ -72,14 +77,16 @@ export const products: Product[] = [
       {
         id: 'var-negro',
         colorName: 'Negro Onyx',
-        swatchUrl: 'https://placehold.co/100x100/1a1a1a/ffffff?text=N',
+        imageFolder: '',
         images: [
           {
-            url: 'https://placehold.co/800x800/1a1a1a/ffffff?text=Remera+Negra+Frontal',
+            filename:
+              'https://placehold.co/800x800/1a1a1a/ffffff?text=Remera+Negra+Frontal',
             alt: 'Remera Heavy Negra Frontal',
           },
           {
-            url: 'https://placehold.co/800x800/1a1a1a/ffffff?text=Remera+Negra+Dorso',
+            filename:
+              'https://placehold.co/800x800/1a1a1a/ffffff?text=Remera+Negra+Dorso',
             alt: 'Remera Heavy Negra Dorso',
           },
         ],
@@ -93,10 +100,11 @@ export const products: Product[] = [
       {
         id: 'var-blanco',
         colorName: 'Blanco Tiza',
-        swatchUrl: 'https://placehold.co/100x100/f8f9fa/1a1a1a?text=B',
+        imageFolder: '',
         images: [
           {
-            url: 'https://placehold.co/800x800/f8f9fa/1a1a1a?text=Remera+Blanca+Frontal',
+            filename:
+              'https://placehold.co/800x800/f8f9fa/1a1a1a?text=Remera+Blanca+Frontal',
             alt: 'Remera Heavy Blanca Frontal',
           },
         ],
@@ -131,10 +139,10 @@ export const products: Product[] = [
       {
         id: 'var-marfil',
         colorName: 'Marfil',
-        swatchUrl: `${r2Url}/pantuflas-marfil.avif`,
+        imageFolder: '',
         images: [
           {
-            url: `${r2Url}/pantuflas-marfil.avif`,
+            filename: `pantuflas-marfil.avif`,
             alt: 'Pantuflas Zueco Marfil Frontal',
           },
           // Podrías agregar más vistas si existen
@@ -150,10 +158,10 @@ export const products: Product[] = [
       {
         id: 'var-marron',
         colorName: 'Marrón',
-        swatchUrl: `${r2Url}/pantuflas-marron.avif`,
+        imageFolder: '',
         images: [
           {
-            url: `${r2Url}/pantuflas-marron.avif`,
+            filename: `pantuflas-marron.avif`,
             alt: 'Pantuflas Zueco Marrón Frontal',
           },
         ],
@@ -168,10 +176,10 @@ export const products: Product[] = [
       {
         id: 'var-rosa',
         colorName: 'Rosa',
-        swatchUrl: `${r2Url}/pantuflas-rosado.avif`,
+        imageFolder: '',
         images: [
           {
-            url: `${r2Url}/pantuflas-rosado.avif`,
+            filename: `pantuflas-rosado.avif`,
             alt: 'Pantuflas Zueco Rosa Frontal',
           },
         ],
@@ -185,5 +193,191 @@ export const products: Product[] = [
       },
     ],
   },
-  // Aquí puedes seguir agregando más productos completos...
+  {
+    id: 'prod-jeans-star-patch',
+    slug: 'jeans-star-patch-high-waist',
+    name: 'Jeans Retazos de Estrellas Tiro Alto',
+    category: 'pantalones',
+    price: 45700,
+    description:
+      'Lindos jeans para mujeres y niñas, pantalones de retazos de estrellas, cintura alta, pierna recta, ropa casual de preppy.',
+    details: {
+      fabric: 'Mezclilla',
+      fit: 'Pierna Recta',
+      features: [
+        'Cintura alta (Tiro alto)',
+        'Cierre de cremallera',
+        'Diseño de retazos de estrellas',
+        'Estilo clásico casual',
+        'Origen: Importado',
+      ],
+    },
+    variants: [
+      {
+        id: 'var-negro',
+        colorName: 'Negro',
+        imageFolder: 'products/pants/jeans-star-patch/black1',
+        images: [
+          {
+            filename: `jean-estrellas-negro-frontal-1.jpg`,
+            alt: 'Jean Negro Frontal Pose 1',
+          },
+          {
+            filename: `jean-estrellas-negro-frontal-2.jpg`,
+            alt: 'Jean Negro Frontal Pose 2',
+          },
+          {
+            filename: `jean-estrellas-negro-trasero.jpg`,
+            alt: 'Jean Negro Vista Trasera',
+          },
+          {
+            filename: `jean-estrellas-negro-modelo-1.jpg`,
+            alt: 'Modelo con Jean Negro Cuerpo Entero 1',
+          },
+          {
+            filename: `jean-estrellas-negro-modelo-2.jpg`,
+            alt: 'Modelo con Jean Negro Cuerpo Entero 2',
+          },
+          {
+            filename: `jean-estrellas-negro-modelo-3.jpg`,
+            alt: 'Modelo con Jean Negro Cuerpo Entero 3',
+          },
+        ],
+        inventory: [
+          { size: 'S', stock: 4 },
+          { size: 'M', stock: 8 },
+          { size: 'L', stock: 6 },
+          { size: 'XL', stock: 2 },
+        ],
+      },
+      {
+        id: 'var-azul1',
+        colorName: 'Azul 1',
+        imageFolder: 'products/pants/jeans-star-patch/blue1',
+        images: [
+          {
+            filename: 'jean-estrellas-azul-frontal-1.jpg',
+            alt: 'Jean Azul 1 Frontal Pose 1',
+          },
+          {
+            filename: 'jean-estrellas-azul-frontal-2.jpg',
+            alt: 'Jean Azul 1 Frontal Pose 2',
+          },
+          {
+            filename: 'jean-estrellas-azul-modelo-1.jpg',
+            alt: 'Modelo con Jean Azul 1 Cuerpo Entero 1',
+          },
+          {
+            filename: 'jean-estrellas-azul-modelo-2.jpg',
+            alt: 'Modelo con Jean Azul 1 Cuerpo Entero 2',
+          },
+          {
+            filename: 'jean-estrellas-azul-trasero.jpg',
+            alt: 'Jean Azul 1 Vista Trasera',
+          },
+        ],
+        inventory: [
+          { size: 'S', stock: 3 },
+          { size: 'M', stock: 5 },
+          { size: 'L', stock: 7 },
+          { size: 'XL', stock: 4 },
+        ],
+      },
+      {
+        id: 'var-azul2', // Asumí que la descripción de "azul4" correspondía a esta variante
+        colorName: 'Azul 2',
+        imageFolder: 'products/pants/jeans-star-patch/blue2',
+        images: [
+          {
+            filename: `jean-estrellas-azul4-frontal-1.jpg`,
+            alt: 'Jean Azul 2 Frontal Pose 1',
+          },
+          {
+            filename: `jean-estrellas-azul4-frontal-2.jpg`,
+            alt: 'Jean Azul 2 Frontal Pose 2',
+          },
+          {
+            filename: `jean-estrellas-azul4-frontal-3.jpg`,
+            alt: 'Jean Azul 2 Frontal Pose 3',
+          },
+          {
+            filename: `jean-estrellas-azul4-frontal-4.jpg`,
+            alt: 'Jean Azul 2 Frontal Pose 4',
+          },
+          {
+            filename: `jean-estrellas-azul4-extendido.jpg`,
+            alt: 'Jean Azul 2 Plano Extendido',
+          },
+        ],
+        inventory: [
+          { size: 'S', stock: 2 },
+          { size: 'M', stock: 6 },
+          { size: 'L', stock: 4 },
+          { size: 'XL', stock: 1 },
+        ],
+      },
+      {
+        id: 'var-azul-oscuro',
+        colorName: 'Azul Oscuro',
+        imageFolder: 'products/pants/jeans-star-patch/blue-dark',
+        images: [
+          {
+            filename: 'jean-estrellas-azul-oscuro-frontal-1.jpg',
+            alt: 'Jean Azul Oscuro Frontal Pose 1',
+          },
+          {
+            filename: 'jean-estrellas-azul-oscuro-frontal-2.jpg',
+            alt: 'Jean Azul Oscuro Frontal Pose 2',
+          },
+          {
+            filename: 'jean-estrellas-azul-oscuro-modelo-1.jpg',
+            alt: 'Modelo con Jean Azul Oscuro Cuerpo Entero 1',
+          },
+          {
+            filename: 'jean-estrellas-azul-oscuro-modelo-2.jpg',
+            alt: 'Modelo con Jean Azul Oscuro Cuerpo Entero 2',
+          },
+          {
+            filename: 'jean-estrellas-azul-oscuro-trasero.jpg',
+            alt: 'Jean Azul Oscuro Vista Trasera',
+          },
+        ],
+        inventory: [
+          { size: 'S', stock: 5 },
+          { size: 'M', stock: 9 },
+          { size: 'L', stock: 3 },
+          { size: 'XL', stock: 2 },
+        ],
+      },
+      {
+        id: 'var-azul3',
+        colorName: 'Azul 3',
+        imageFolder: 'products/pants/jeans-star-patch/blue3',
+        images: [
+          {
+            filename: `jean-estrellas-azul3-frontal.jpg`,
+            alt: 'Jean Azul 3 Frontal',
+          },
+          {
+            filename: `jean-estrellas-azul3-lateral.jpg`,
+            alt: 'Jean Azul 3 Vista Lateral',
+          },
+          {
+            filename: `jean-estrellas-azul3-trasera.jpg`,
+            alt: 'Jean Azul 3 Vista Trasera',
+          },
+          {
+            filename: `jean-estrellas-azul3-modelo.jpg`,
+            alt: 'Modelo con Jean Azul 3 Cuerpo Entero',
+          },
+        ],
+        inventory: [
+          { size: 'S', stock: 4 },
+          { size: 'M', stock: 7 },
+          { size: 'L', stock: 5 },
+          { size: 'XL', stock: 3 },
+        ],
+      },
+    ],
+  },
 ];

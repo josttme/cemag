@@ -1,6 +1,8 @@
 // src/components/react/ProductConfigurator.tsx
 import { useState, useEffect } from 'react';
 import type { Product, ProductVariant } from '@lib/data';
+import { buildProductImageUrl } from '@lib/images';
+
 import { addCartItem } from '@store/cartStore';
 
 interface Props {
@@ -48,63 +50,108 @@ export default function ProductConfigurator({ product }: Props) {
   };
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      setSizeError(true);
-      return;
-    }
-    setSizeError(false);
+    // Validaciones previas (ej. asegurar que hay un talle seleccionado)
+    if (!selectedSize) return;
 
+    // 1. Fabricamos la URL miniatura dinámicamente para el carrito
+    const cartImageUrl = buildProductImageUrl({
+      folder: activeVariant.imageFolder,
+      filename: activeVariant.images[0].filename,
+      width: 150, // Un tamaño pequeño, perfecto para la vista del carrito
+    });
+
+    // 2. Despachamos el ítem al carrito con la URL correcta
     addCartItem({
       productId: product.id,
       name: product.name,
       price: product.price,
       colorName: activeVariant.colorName,
       size: selectedSize,
-      imageUrl: activeVariant.swatchUrl,
+      imageUrl: cartImageUrl, // <-- EL FIX: Usamos la constante que acabamos de crear
     });
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 w-full max-w-[1200px] mx-auto">
-      {/* --- COLUMNA IZQ: GALERÍA (Se mantiene igual, consume activeVariant.images) --- */}
+      {/* --- COLUMNA IZQ: GALERÍA --- */}
       <div className="w-full lg:w-[60%] flex flex-col-reverse lg:flex-row gap-4">
-        <div className="hidden lg:flex flex-col gap-2 w-16 flex-shrink-0">
+        {/* Miniaturas (Desktop) */}
+        <div className="hidden lg:flex flex-col gap-3 w-20 flex-shrink-0">
           {activeVariant.images.map((img, idx) => (
             <button
               key={idx}
               onMouseEnter={() => setActiveImageIndex(idx)}
-              className={`aspect-square w-full rounded-md overflow-hidden border ${
+              className={`aspect-[4/5] w-full rounded-md overflow-hidden border-2 transition-all ${
                 activeImageIndex === idx
                   ? 'border-slate-900'
                   : 'border-transparent hover:border-slate-300'
               }`}
             >
+              {/* EL FIX: Agregamos loading="lazy" */}
               <img
-                src={img.url}
+                src={buildProductImageUrl({
+                  folder: activeVariant.imageFolder,
+                  filename: img.filename,
+                  width: 150, // El Worker la achica automáticamente en la nube
+                })}
                 alt={img.alt}
-                className="w-full h-full object-cover"
+                loading="lazy"
               />
             </button>
           ))}
         </div>
 
-        <div className="w-full aspect-square bg-[#f6f6f6] rounded-xl overflow-hidden relative">
+        {/* Imagen Principal */}
+        {/* EL FIX ARQUITECTÓNICO: 
+          1. aspect-[4/5]: Obliga al contenedor a tener la proporción real de tus fotos (569x700).
+          2. lg:max-h-[80vh]: En desktop, la imagen nunca medirá más del 80% del alto de la pantalla.
+          3. w-full: Se asegura de usar el espacio disponible sin deformarse.
+        */}
+        {/* Imagen Principal */}
+        <div className="w-full aspect-[4/5] lg:max-h-[80vh] bg-[#f6f6f6] rounded-xl overflow-hidden relative flex items-center justify-center">
+          {/* Carrusel Táctil (Mobile) */}
           <div className="flex lg:hidden w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
-            {activeVariant.images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img.url}
-                alt={img.alt}
-                className="w-full h-full object-cover flex-shrink-0 snap-center"
-              />
-            ))}
+            {activeVariant.images.map((img, idx) => {
+              // SOLUCIÓN MÓVIL: Construimos la URL dinámica para cada foto del carrusel
+              const mobileImageUrl = buildProductImageUrl({
+                folder: activeVariant.imageFolder,
+                filename: img.filename,
+                width: 600, // Optimizamos el tamaño para pantallas móviles
+              });
+
+              return (
+                <img
+                  key={idx}
+                  src={mobileImageUrl}
+                  alt={img.alt}
+                  className="w-full h-full object-cover flex-shrink-0 snap-center"
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                />
+              );
+            })}
           </div>
-          <img
-            src={activeVariant.images[activeImageIndex].url}
-            alt={activeVariant.images[activeImageIndex].alt}
-            className="hidden lg:block w-full h-full object-cover"
-            fetchPriority="high"
-          />
+
+          {/* Imagen Activa (Desktop) */}
+          {(() => {
+            // SOLUCIÓN DESKTOP: Obtenemos la imagen del índice activo de forma segura
+            const activeImage = activeVariant.images[activeImageIndex];
+            if (!activeImage) return null;
+
+            const desktopImageUrl = buildProductImageUrl({
+              folder: activeVariant.imageFolder,
+              filename: activeImage.filename,
+              // Aquí no le pasamos width para traer la original en alta resolución de R2
+            });
+
+            return (
+              <img
+                src={desktopImageUrl}
+                alt={activeImage.alt}
+                className="hidden lg:block w-full h-full object-contain"
+                fetchPriority="high"
+              />
+            );
+          })()}
         </div>
       </div>
 
@@ -128,27 +175,41 @@ export default function ProductConfigurator({ product }: Props) {
             Color:{' '}
             <span className="text-slate-500">{activeVariant.colorName}</span>
           </p>
-          <div className="flex flex-wrap gap-2">
-            {product.variants.map((variant) => (
-              <button
-                key={variant.id}
-                onClick={() => {
-                  setActiveVariant(variant);
-                  setActiveImageIndex(0);
-                }}
-                className={`w-16 h-16 rounded-md overflow-hidden border-2 transition-all ${
-                  activeVariant.id === variant.id
-                    ? 'border-slate-900'
-                    : 'border-transparent hover:border-slate-300'
-                }`}
-              >
-                <img
-                  src={variant.swatchUrl}
-                  alt={variant.colorName}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
+          {/* Selector de Color dinámico */}
+          <div className="flex flex-wrap gap-3 mt-3">
+            {product.variants.map((variant) => {
+              // Fabricamos el swatch dinámicamente con la 1ra foto
+              const swatchImageUrl = buildProductImageUrl({
+                folder: variant.imageFolder,
+                filename: variant.images[0].filename,
+                width: 4,
+              });
+
+              return (
+                <button
+                  key={variant.id}
+                  onClick={() => {
+                    // USAMOS TU ESTADO REAL:
+                    setActiveVariant(variant);
+                    setActiveImageIndex(0); // Reseteamos la vista a la primera foto del nuevo color
+                  }}
+                  title={variant.colorName}
+                  // USAMOS TU ESTADO REAL para comprobar si está activo:
+                  className={`w-16 aspect-[4/5] rounded-md border-2 transition-all overflow-hidden ${
+                    activeVariant.id === variant.id
+                      ? 'border-slate-900 scale-110 '
+                      : 'border-transparent  hover:scale-105 hover:border-slate-300'
+                  }`}
+                >
+                  <img
+                    src={swatchImageUrl}
+                    alt={variant.colorName}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
 

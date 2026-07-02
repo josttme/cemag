@@ -1,6 +1,8 @@
 ---
 // src/components/astro/ProductCard.astro
 import type { Product } from '@lib/data';
+// 1. Importamos tu nueva función constructora de URLs
+import { buildProductImageUrl } from '@lib/images';
 
 interface Props {
   product: Product;
@@ -8,21 +10,28 @@ interface Props {
 
 const { product } = Astro.props;
 
-// 1. Obtenemos la imagen frontal del primer color disponible
-const mainImage = product.variants[0]?.images[0];
-// 2. Generamos la URL amigable para el SEO
+// 2. Extraemos la variante y la imagen de forma segura
+const firstVariant = product.variants[0];
+const mainImage = firstVariant?.images[0];
+
+// 3. Construimos la URL final usando tu arquitectura
+const finalImageUrl = mainImage
+  ? buildProductImageUrl({
+      folder: firstVariant.imageFolder,
+      filename: mainImage.filename,
+      // width: 400 <-- Podrías usar el Worker aquí para que el Home cargue rapidísimo
+    })
+  : '';
+
 const productUrl = `/productos/${product.slug}`;
 ---
 
-<a href={productUrl} class="group flex flex-col gap-3 cursor-pointer">
-  {/* Contenedor de la Imagen con Aspect Ratio de Indumentaria (4:5) */}
-  <div
-    class="relative aspect-4/5 overflow-hidden rounded-xl bg-[#f6f6f6] border border-slate-100"
-  >
+<a href={productUrl} class="group flex flex-col cursor-pointer">
+  <div class="relative aspect-[4/5] overflow-hidden bg-[#f6f6f6]">
     {
       mainImage && (
         <img
-          src={mainImage.url}
+          src={finalImageUrl}
           alt={mainImage.alt}
           class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
@@ -31,34 +40,28 @@ const productUrl = `/productos/${product.slug}`;
     }
   </div>
 
-  {/* Información de la Prenda */}
-  <div class="flex flex-col gap-1 px-1">
-    <div class="flex justify-between items-start gap-2">
-      <h3 class="text-sm md:text-base font-medium text-slate-900 line-clamp-1">
-        {product.name}
-      </h3>
-      <p
-        class="text-sm md:text-base font-medium text-slate-900 whitespace-nowrap"
-      >
-        ${product.price.toLocaleString('es-AR')}
-      </p>
-    </div>
-
-    {/* Mostramos el textil para aportar valor */}
-    <p class="text-xs text-slate-500 line-clamp-1">
-      {product.details.fabric}
-    </p>
-
+  <div class="flex flex-col pt-2 gap-1">
     {/* Swatches (Círculos de Colores Disponibles) */}
-    <div class="flex items-center gap-1.5 mt-2">
+    <div class="flex items-center gap-1.5">
       {
-        product.variants.map((variant) => (
-          <div
-            class="w-4 h-4 rounded-full border border-slate-200 shadow-sm"
-            style={`background-image: url(${variant.swatchUrl}); background-size: cover;`}
-            title={variant.colorName}
-          />
-        ))
+        product.variants.map((variant) => {
+          // Generamos la miniatura para la tarjeta
+          const swatchUrl = variant.images[0]
+            ? buildProductImageUrl({
+                folder: variant.imageFolder,
+                filename: variant.images[0].filename,
+                width: 5, // Aún más pequeña, solo necesitamos 16px en la tarjeta
+              })
+            : '';
+
+          return (
+            <div
+              class="w-16 aspect-4/5   bg-center bg-cover"
+              style={`background-image: url('${swatchUrl}');`}
+              title={variant.colorName}
+            />
+          );
+        })
       }
       {
         product.variants.length > 1 && (
@@ -67,6 +70,19 @@ const productUrl = `/productos/${product.slug}`;
           </span>
         )
       }
+    </div>
+    <div class="flex flex-col gap-0">
+      <h3 class="text-sm md:text-base font-medium text-slate-900 line-clamp-1">
+        {product.name}
+      </h3>
+      <p class="text-base text-slate-500 line-clamp-1">
+        {product.details.fabric}
+      </p>
+      <p
+        class="text-sm md:text-lg font-medium text-slate-900 whitespace-nowrap"
+      >
+        ${product.price.toLocaleString('es-AR')}
+      </p>
     </div>
   </div>
 </a>

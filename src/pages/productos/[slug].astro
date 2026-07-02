@@ -16,7 +16,7 @@ const { product } = Astro.props;
 ---
 
 <Layout title={`${product.name} - Cemag`} description={product.description}>
-  <main class="w-full pt-8 pb-16 lg:py-12">
+  <main class="w-full pb-16 lg:py-12">
     <ProductConfigurator client:load product={product} />
   </main>
 </Layout>
